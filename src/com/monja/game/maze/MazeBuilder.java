@@ -16,6 +16,18 @@ public class MazeBuilder {
         return maze;
     }
 
+    public static MazeHistory getMazeWithHistory(int width, int height) {
+        Maze maze = new Maze(width, height);
+        MazeHistory mazeHistory = new MazeHistory(width, height);
+
+        mazeHistory.pushCellsIntoHistory(copyCellsArray(maze));
+        recursiveDivision(maze, mazeHistory, width, height, 0, 0);
+
+        burrowExit(maze, width, height);
+        mazeHistory.pushCellsIntoHistory(copyCellsArray(maze));
+        return mazeHistory;
+    }
+
     private static void recursiveDivision(Maze maze, int width, int height, int xOffset, int yOffset) {
 
         Random random = new Random();
@@ -66,6 +78,62 @@ public class MazeBuilder {
         recursiveDivision(maze, nextWidthPair, nextHeightPair, xOffsetPair, yOffsetPair);
     }
 
+    private static void recursiveDivision(Maze maze, MazeHistory history, int width, int height, int xOffset, int yOffset) {
+
+        Random random = new Random();
+        boolean isHorizontal;
+
+        if (width < height) isHorizontal = true;
+        else if (width > height) isHorizontal = false;
+        else isHorizontal = random.nextBoolean();
+
+        int nextWidth, nextHeight;
+        int xOffsetPair, yOffsetPair;
+        int nextWidthPair, nextHeightPair;
+
+        if (isHorizontal) {
+            if (height < 5) return;
+
+            int indexWall = yOffset + getRandomElement(2, height - 3) / 2 * 2;      // the wall is on an even coordinate
+            int indexPath = xOffset + getRandomElement(1, width - 2) / 2 * 2 + 1;   // the hole is on an odd coordinate
+
+            buildWall(maze, indexWall, width, xOffset, true);
+            history.pushCellsIntoHistory(copyCellsArray(maze));
+            buildPath(maze, indexPath, indexWall, true);
+            history.pushCellsIntoHistory(copyCellsArray(maze));
+
+            nextWidth = width;
+            nextHeight = indexWall - yOffset + 1;
+
+            xOffsetPair = xOffset;
+            yOffsetPair = indexWall;
+            nextWidthPair = width;
+            nextHeightPair = height + yOffset - indexWall;
+
+        } else {
+            if (width < 5) return;
+
+            int indexWall = xOffset + getRandomElement(2, width - 3) / 2 * 2;
+            int indexPath = yOffset + getRandomElement(1, height - 2) / 2 * 2 + 1;
+
+            buildWall(maze, indexWall, height, yOffset, false);
+            history.pushCellsIntoHistory(copyCellsArray(maze));
+            buildPath(maze, indexPath, indexWall, false);
+            history.pushCellsIntoHistory(copyCellsArray(maze));
+
+            nextWidth = indexWall - xOffset + 1;
+            nextHeight = height;
+
+            xOffsetPair = indexWall;
+            yOffsetPair = yOffset;
+            nextWidthPair = width + xOffset - indexWall;
+            nextHeightPair = height;
+        }
+
+        recursiveDivision(maze, history, nextWidth, nextHeight, xOffset, yOffset);
+        recursiveDivision(maze, history, nextWidthPair, nextHeightPair, xOffsetPair, yOffsetPair);
+    }
+
     private static void buildWall(Maze maze, int indexWall, int length, int offset, boolean isHorizontal) {
         if (isHorizontal) {
             for (int x = offset; x < (length + offset - 1); x++)
@@ -82,6 +150,13 @@ public class MazeBuilder {
         } else {
             maze.setCell(indexWall, indexPath, Maze.Cell.PATH);
         }
+    }
+
+    private static Maze.Cell[] copyCellsArray(Maze maze) {
+        Maze.Cell[] sourceArray = maze.getCellsArray();
+        Maze.Cell[] destinationArray = new Maze.Cell[sourceArray.length];
+        System.arraycopy(sourceArray, 0, destinationArray, 0, destinationArray.length);
+        return destinationArray;
     }
 
     private static void burrowExit(Maze maze, int width, int height) {

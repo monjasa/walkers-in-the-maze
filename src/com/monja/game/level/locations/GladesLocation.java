@@ -112,9 +112,9 @@ public class GladesLocation implements LocationStrategy {
         level.setHeight(height);
         byte[] tiles = new byte[width * height];
 
-        for (int y = 0; y < height / 2; y++) {
-            for (int x = 0; x < width / 2; x++) {
-                Maze.Cell cell = cells[x + y * width / 2];
+        for (int y = 0; y < mazeHeight; y++) {
+            for (int x = 0; x < mazeWidth; x++) {
+                Maze.Cell cell = cells[x + y * mazeWidth];
 
                 if (cell.equals(Maze.Cell.WALL)) {
                     tiles[(2 * x) + (2 * y) * width] = getWallTile(0).getId();
@@ -158,10 +158,12 @@ public class GladesLocation implements LocationStrategy {
                 }
             }
 
-        tiles[(2 * xExit) + (2 * yExit) * width] = getExitTile(0).getId();
-        tiles[(2 * xExit + 1) + (2 * yExit) * width] = getExitTile(1).getId();
-        tiles[(2 * xExit) + (2 * yExit + 1) * width] = getExitTile(2).getId();
-        tiles[(2 * xExit + 1) + (2 * yExit + 1) * width] = getExitTile(3).getId();
+        if (xExit != 0 && yExit != 0) {
+            tiles[(2 * xExit) + (2 * yExit) * width] = getExitTile(0).getId();
+            tiles[(2 * xExit + 1) + (2 * yExit) * width] = getExitTile(1).getId();
+            tiles[(2 * xExit) + (2 * yExit + 1) * width] = getExitTile(2).getId();
+            tiles[(2 * xExit + 1) + (2 * yExit + 1) * width] = getExitTile(3).getId();
+        }
 
         level.setTiles(tiles);
     }

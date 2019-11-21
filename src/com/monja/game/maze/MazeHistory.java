@@ -23,6 +23,10 @@ public class MazeHistory {
         return mazeHistory.get(iteration);
     }
 
+    public int getHistorySize() {
+        return mazeHistory.size();
+    }
+
     public int getMazeWidth() {
         return mazeWidth;
     }

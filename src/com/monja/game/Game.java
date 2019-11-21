@@ -1,5 +1,6 @@
 package com.monja.game;
 
+import com.monja.game.entities.Actor;
 import com.monja.game.entities.Player;
 import com.monja.game.gfx.Screen;
 import com.monja.game.gfx.SpriteSheet;
@@ -7,10 +8,7 @@ import com.monja.game.level.Level;
 import com.monja.game.level.locations.LocationStrategy;
 import com.monja.game.sound.SoundPlayer;
 import com.monja.game.sound.SoundsEnumeration;
-import com.monja.game.states.GameCreationMenuState;
-import com.monja.game.states.State;
-import com.monja.game.states.StateClient;
-import com.monja.game.states.StatesEnumeration;
+import com.monja.game.states.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -54,7 +52,7 @@ public class Game extends Canvas implements Runnable {
     private InputHandler input;
     private SoundPlayer soundPlayer;
     private Level level;
-    private Player player;
+    private Actor actor;
 
     public Game() {
         setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
@@ -117,27 +115,29 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void initializeLevel() {
-        setupLevelAndPlayer();
+        setupLevelAndActor();
         startTime = System.currentTimeMillis();
         pauseStartTime = 0;
         pauseEndTime = 0;
     }
 
-    public void setupLevelAndPlayer() {
+    public void setupLevelAndActor() {
         int mazeSize = GameCreationMenuState.getDifficulty(selectedDifficulty).getSize();
         level = new Level(locationStrategy, mazeSize, mazeSize);
-        player = new Player(level, 20, 20, input);
-        level.addEntity(player);
+        actor = new Player(level, 20, 20, input);
+        level.addEntity(actor);
+    }
+
+    public void setupLevelAndActor(Level level, Actor actor) {
+        this.level = level;
+        this.actor = actor;
     }
 
     public void setupCreationTool() {
         int mazeWidth = 15;
         int mazeHeight = 11;
-        level = new Level(locationStrategy, mazeWidth, mazeHeight);
 
-
-        player = new Player(level, 20, 20, input);
-        level.addEntity(player);
+        ((CreationToolState) StateClient.getState(StatesEnumeration.CREATION_TOOL)).initializeMazeHistory(mazeWidth, mazeHeight);
     }
 
     @Override
@@ -251,8 +251,12 @@ public class Game extends Canvas implements Runnable {
         return soundPlayer;
     }
 
-    public Player getPlayer() {
-        return player;
+    public void setActor(Actor actor) {
+        this.actor = actor;
+    }
+
+    public Actor getActor() {
+        return actor;
     }
 
     public Screen getScreen() {

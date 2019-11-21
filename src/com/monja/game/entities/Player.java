@@ -5,24 +5,20 @@ import com.monja.game.gfx.Colours;
 import com.monja.game.gfx.Screen;
 import com.monja.game.level.Level;
 import com.monja.game.level.tiles.Active;
-import com.monja.game.level.tiles.ActiveTile;
 import com.monja.game.level.tiles.Tile;
 
 import static com.monja.game.Game.game;
 
-public class Player extends Mob {
+public class Player extends Actor {
 
-    private InputHandler input;
     private int colour = Colours.get(-1, 101, 401, 554);
-    private int scale = 1;
     private int tickCount = 0;
 
     protected boolean isOnExit = false;
     protected boolean isSwimming = false;
 
     public Player(Level level, int x, int y, InputHandler input) {
-        super(level, "Player", x, y, 1);
-        this.input = input;
+        super(level, "Player", x, y, input);
     }
 
     @Override
@@ -129,19 +125,19 @@ public class Player extends Mob {
         int yMax = 7;
 
         for (int x = xMin; x < xMax; x++) {
-            if (isSolidTile(xa, ya, x, yMin)) return true;
+            if (isOnSolidTile(xa, ya, x, yMin)) return true;
         }
 
         for (int x = xMin; x < xMax; x++) {
-            if (isSolidTile(xa, ya, x, yMax)) return true;
+            if (isOnSolidTile(xa, ya, x, yMax)) return true;
         }
 
         for (int y = yMin; y < yMax; y++) {
-            if (isSolidTile(xa, ya, xMin, y)) return true;
+            if (isOnSolidTile(xa, ya, xMin, y)) return true;
         }
 
         for (int y = yMin; y < yMax; y++) {
-            if (isSolidTile(xa, ya, xMax, y)) return true;
+            if (isOnSolidTile(xa, ya, xMax, y)) return true;
         }
 
         return false;

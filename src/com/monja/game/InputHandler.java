@@ -35,6 +35,9 @@ public class InputHandler implements KeyListener {
     public Key right = new Key();
     public Key enter = new Key();
     public Key escape = new Key();
+    public Key q = new Key();
+    public Key e = new Key();
+    public Key r = new Key();
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -68,6 +71,15 @@ public class InputHandler implements KeyListener {
         }
         if (keyCode == KeyEvent.VK_ESCAPE) {
             escape.toggle(isPressed);
+        }
+        if (keyCode == KeyEvent.VK_Q) {
+            q.toggle(isPressed);
+        }
+        if (keyCode == KeyEvent.VK_E) {
+            e.toggle(isPressed);
+        }
+        if (keyCode == KeyEvent.VK_R) {
+            r.toggle(isPressed);
         }
     }
 }

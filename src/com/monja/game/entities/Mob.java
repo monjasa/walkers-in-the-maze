@@ -3,6 +3,8 @@ package com.monja.game.entities;
 import com.monja.game.level.Level;
 import com.monja.game.level.tiles.Tile;
 
+import java.util.Arrays;
+
 public abstract class Mob extends Entity {
 
     protected String name;
@@ -44,7 +46,7 @@ public abstract class Mob extends Entity {
 
     public abstract boolean hasCollided(int xa, int ya);
 
-    protected boolean isSolidTile(int xa, int ya, int x, int y) {
+    protected boolean isOnSolidTile(int xa, int ya, int x, int y) {
         if (level == null) {
             return false;
         }
@@ -55,6 +57,26 @@ public abstract class Mob extends Entity {
         if (!lastTile.equals(newTile) && newTile.isSolid()) {
             return true;
         }
+
+        return false;
+    }
+
+    protected boolean isOnBorderTile(int xa, int ya, int x, int y) {
+        if (level == null)
+            return false;
+
+        int xLastTile = (this.x + x) >> 3;
+        int yLastTile = (this.y + y) >> 3;
+        int xNewTile = (this.x + x + xa) >> 3;
+        int yNewTile = (this.y + y + ya) >> 3;
+
+        Integer[] xBorderTiles = {0, 1, level.getWidth() - 2, level.getWidth() - 1};
+        Integer[] yBorderTiles = {0, 1, level.getHeight() - 2, level.getHeight() - 1};
+
+        if (xLastTile != xNewTile && Arrays.asList(xBorderTiles).contains(xNewTile))
+            return true;
+        if (yLastTile != yNewTile && Arrays.asList(yBorderTiles).contains(yNewTile))
+            return true;
 
         return false;
     }

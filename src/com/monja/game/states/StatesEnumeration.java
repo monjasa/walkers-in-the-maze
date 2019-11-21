@@ -7,5 +7,6 @@ public enum StatesEnumeration {
     GAME,
     CREATION_TOOL,
     PAUSE,
+    CREATION_PAUSE,
     FINISH
 }

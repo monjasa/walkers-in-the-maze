@@ -3,7 +3,6 @@ package com.monja.game.states;
 import com.monja.game.Game;
 import com.monja.game.InputHandler;
 import com.monja.game.entities.Actor;
-import com.monja.game.entities.Player;
 import com.monja.game.gfx.Colours;
 import com.monja.game.gfx.Font;
 import com.monja.game.gfx.Screen;
@@ -11,14 +10,14 @@ import com.monja.game.level.Level;
 import com.monja.game.sound.SoundPlayer;
 import com.monja.game.sound.SoundsEnumeration;
 
-public class PauseState extends RenderedState {
+public class CreationPauseState extends RenderedState {
 
     private static String resume = "Resume";
     private static String backToMenu = "Back to menu";
     private static String exit = "Exit";
     private static String pauseMenuOptions[] = {resume, backToMenu, exit};
 
-    public PauseState(Game game) {
+    public CreationPauseState(Game game) {
         super(game);
     }
 
@@ -85,10 +84,7 @@ public class PauseState extends RenderedState {
                 case 0:
                     soundPlayer.playSound(SoundsEnumeration.PAUSE_DEACTIVATION);
                     game.getLocationStrategy().resumeBackground();
-
-                    game.pauseEndTime = System.currentTimeMillis();
-                    game.startTime = game.startTime + (game.pauseEndTime - game.pauseStartTime);
-                    game.changeState(StateClient.getState(StatesEnumeration.GAME));
+                    game.changeState(StateClient.getState(StatesEnumeration.CREATION_TOOL));
                     break;
                 case 1:
                     soundPlayer.playSound(SoundsEnumeration.PAUSE_DEACTIVATION);
@@ -106,4 +102,5 @@ public class PauseState extends RenderedState {
             game.setSelectedOption(0);
         }
     }
+
 }

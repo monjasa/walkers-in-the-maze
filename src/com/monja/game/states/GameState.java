@@ -2,6 +2,7 @@ package com.monja.game.states;
 
 import com.monja.game.Game;
 import com.monja.game.InputHandler;
+import com.monja.game.entities.Actor;
 import com.monja.game.entities.Player;
 import com.monja.game.gfx.Screen;
 import com.monja.game.level.Level;
@@ -18,9 +19,9 @@ public class GameState extends RenderedState {
     void renderState() {
         Screen screen = game.getScreen();
 
-        Player player = game.getPlayer();
-        int xOffset = player.x - (screen.width / 2);
-        int yOffset = player.y - (screen.height / 2);
+        Actor actor = game.getActor();
+        int xOffset = actor.x - (screen.width / 2);
+        int yOffset = actor.y - (screen.height / 2);
 
         Level level = game.getLevel();
         level.renderTiles(screen, xOffset, yOffset);
@@ -39,8 +40,8 @@ public class GameState extends RenderedState {
 
             game.pauseStartTime = System.currentTimeMillis();
             game.changeState(StateClient.getState(StatesEnumeration.PAUSE));
-        }
 
-        input.escape.toggle(false);
+            input.escape.toggle(false);
+        }
     }
 }

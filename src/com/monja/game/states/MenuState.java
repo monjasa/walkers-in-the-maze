@@ -11,7 +11,7 @@ import com.monja.game.sound.SoundsEnumeration;
 public class MenuState extends RenderedState {
 
     private static String play = "Play";
-    private static String creationTool = "Creation Tool";
+    private static String creationTool = "Creation Mode";
     private static String settings = "Settings";
     private static String credits = "Credits";
     private static String exit = "Exit";
