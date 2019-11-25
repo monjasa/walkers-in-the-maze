@@ -6,6 +6,8 @@ import com.monja.game.level.Level;
 public abstract class Entity {
 
     public int x, y;
+    protected int xSprite;
+    protected int ySprite;
     protected Level level;
 
     public Entity(Level level) {

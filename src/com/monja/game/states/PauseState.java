@@ -3,7 +3,6 @@ package com.monja.game.states;
 import com.monja.game.Game;
 import com.monja.game.InputHandler;
 import com.monja.game.entities.Actor;
-import com.monja.game.entities.Player;
 import com.monja.game.gfx.Colours;
 import com.monja.game.gfx.Font;
 import com.monja.game.gfx.Screen;

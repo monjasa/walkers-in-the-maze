@@ -52,18 +52,6 @@ public class Level {
         image.setRGB(x, y, newTile.getLevelColour());
     }
 
-    public void generateLevel() {
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                if (x * y % 10 < 7) {
-                    tiles[x + y * width] = Tile.GRASS.getId();
-                } else {
-                    tiles[x + y * width] = Tile.STONE.getId();
-                }
-            }
-        }
-    }
-
     public void tick() {
         for (Entity e : entities) {
             e.tick();

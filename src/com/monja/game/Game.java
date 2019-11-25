@@ -19,10 +19,12 @@ import java.awt.image.DataBufferInt;
 
 public class Game extends Canvas implements Runnable {
 
-    private static final int WIDTH = 250;
-    private static final int HEIGHT = WIDTH / 12 * 9;
-    private static final int SCALE = 3;
-    private static final String NAME = "Maze Runner";
+    private static final double RESOLUTION =
+            Toolkit.getDefaultToolkit().getScreenSize().getWidth() / Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+    private static final int WIDTH = 400;
+    private static final int HEIGHT = (int) (WIDTH / RESOLUTION);
+    private static final int SCALE = 1;
+    private static final String NAME = "Walkers In The Maze";
     public static Game game;
 
     private JFrame frame;
@@ -64,12 +66,14 @@ public class Game extends Canvas implements Runnable {
         frame = new JFrame(NAME);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setUndecorated(true);
         frame.setLayout(new BorderLayout());
 
         frame.add(this, BorderLayout.CENTER);
         frame.pack();
 
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
@@ -123,7 +127,7 @@ public class Game extends Canvas implements Runnable {
 
     public void setupLevelAndActor() {
         int mazeSize = GameCreationMenuState.getDifficulty(selectedDifficulty).getSize();
-        level = new Level(locationStrategy, mazeSize, mazeSize);
+        level = new Level(locationStrategy, mazeSize * 2 + 1, mazeSize);
         actor = new Player(level, 20, 20, input);
         level.addEntity(actor);
     }
@@ -134,10 +138,8 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void setupCreationTool() {
-        int mazeWidth = 15;
-        int mazeHeight = 11;
-
-        ((CreationToolState) StateClient.getState(StatesEnumeration.CREATION_TOOL)).initializeMazeHistory(mazeWidth, mazeHeight);
+        int mazeSize = CreationToolMenuState.getDifficulty(selectedDifficulty).getSize();
+        ((CreationToolState) StateClient.getState(StatesEnumeration.CREATION_TOOL)).initializeMazeHistory(mazeSize * 2 + 1, mazeSize);
     }
 
     @Override
@@ -247,24 +249,12 @@ public class Game extends Canvas implements Runnable {
         return input;
     }
 
-    public SoundPlayer getSoundPlayer() {
-        return soundPlayer;
-    }
-
-    public void setActor(Actor actor) {
-        this.actor = actor;
-    }
-
     public Actor getActor() {
         return actor;
     }
 
     public Screen getScreen() {
         return screen;
-    }
-
-    public int[] getPixels() {
-        return pixels;
     }
 
     public int[] getColours() {

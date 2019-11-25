@@ -16,14 +16,11 @@ public class CreationToolMenuState extends RenderedState {
 
     private static String easy = "Easy";
     private static String normal = "Normal";
-    private static String hard = "Hard";
-    private static String insane = "Insane";
-    private static String difficulties[] = {easy, normal, hard, insane};
+    private static String difficulties[] = {easy, normal};
 
     private static HashMap<String, DifficultiesEnumeration> difficultiesMap;
 
     private static String glades = "Glades";
-    //private static String ocean = "The Ocean";
     private static String darkForest = "The Dark Forest";
     private static String locations[] = {glades, darkForest};
 
@@ -36,12 +33,9 @@ public class CreationToolMenuState extends RenderedState {
         difficultiesMap = new HashMap<>();
         difficultiesMap.put(easy, DifficultiesEnumeration.EASY);
         difficultiesMap.put(normal, DifficultiesEnumeration.NORMAL);
-        difficultiesMap.put(hard, DifficultiesEnumeration.HARD);
-        difficultiesMap.put(insane, DifficultiesEnumeration.INSANE);
 
         locationsMap = new HashMap<>();
         locationsMap.put(glades, LocationsEnumeration.GLADES);
-        //locationsMap.put(ocean, LocationsEnumeration.OCEAN);
         locationsMap.put(darkForest, LocationsEnumeration.DARK_FOREST);
     }
 
@@ -73,11 +67,11 @@ public class CreationToolMenuState extends RenderedState {
         int heightBlocks[] = {4, 6, 9, 11, 14};
 
         String selectDifficulty = "Select Difficulty:";
-        Font.render(selectDifficulty, screen, screen.width / 2 - (selectDifficulty.length() * 8) / 2,
+        Font.render(selectDifficulty, screen, screen.xOffset + screen.width / 2 - (selectDifficulty.length() * 8) / 2,
                 heightBlocks[0] * heightUnit, Colours.get(-1, 000, -1, 555), 1);
 
         String selectLocation = "Select Location:";
-        Font.render(selectLocation, screen, screen.width / 2 - (selectLocation.length() * 8) / 2,
+        Font.render(selectLocation, screen, screen.xOffset + screen.width / 2 - (selectLocation.length() * 8) / 2,
                 heightBlocks[2] * heightUnit, Colours.get(-1, 000, -1, 555), 1);
 
         for (int i = 0; i < gameCreationMenuOptions.length; i++) {
@@ -134,6 +128,8 @@ public class CreationToolMenuState extends RenderedState {
                         game.setSelectedDifficulty(--selectedDifficulty);
                     else
                         game.setSelectedDifficulty(difficulties.length - 1);
+
+                    SoundPlayer.getInstance().playSound(SoundsEnumeration.MENU_NAVIGATION);
                     break;
                 case 1:
                     if (selectedLocation - 1 >= 0)
@@ -142,10 +138,10 @@ public class CreationToolMenuState extends RenderedState {
                         game.setSelectedLocation(locations.length - 1);
 
                     game.changeLocationStrategy(getLocation(game.getSelectedLocation()).getLocationStrategy());
+                    SoundPlayer.getInstance().playSound(SoundsEnumeration.MENU_NAVIGATION);
                     break;
             }
 
-            SoundPlayer.getInstance().playSound(SoundsEnumeration.MENU_NAVIGATION);
             input.left.toggle(false);
         }
 
@@ -156,6 +152,8 @@ public class CreationToolMenuState extends RenderedState {
                         game.setSelectedDifficulty(++selectedDifficulty);
                     else
                         game.setSelectedDifficulty(0);
+
+                    SoundPlayer.getInstance().playSound(SoundsEnumeration.MENU_NAVIGATION);
                     break;
                 case 1:
                     if (selectedLocation + 1 < locations.length)
@@ -164,10 +162,10 @@ public class CreationToolMenuState extends RenderedState {
                         game.setSelectedLocation(0);
 
                     game.changeLocationStrategy(getLocation(game.getSelectedLocation()).getLocationStrategy());
+                    SoundPlayer.getInstance().playSound(SoundsEnumeration.MENU_NAVIGATION);
                     break;
             }
 
-            SoundPlayer.getInstance().playSound(SoundsEnumeration.MENU_NAVIGATION);
             input.right.toggle(false);
         }
 
@@ -198,6 +196,7 @@ public class CreationToolMenuState extends RenderedState {
             }
 
             input.enter.toggle(false);
+            game.setSelectedOption(0);
         }
     }
 

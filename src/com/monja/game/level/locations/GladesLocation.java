@@ -20,31 +20,31 @@ public class GladesLocation implements LocationStrategy {
     private static Tile[] pathTiles = new Tile[4];
     private static Tile[] exitTiles = new Tile[4];
 
-    private static final Tile GLADES_STONE_LU = new AnimatedBasicTile(5, new int[][] {{0, 2}, {2, 2}, {4, 2}, {0, 2}},
+    private static final Tile GLADES_STONE_LU = new AnimatedBasicTile(2, new int[][] {{0, 2}, {2, 2}, {4, 2}, {0, 2}},
             Colours.get(-1, 333, 222, 444), 0xFF555555, 750, true);
-    private static final Tile GLADES_STONE_RU = new AnimatedBasicTile(6, new int[][] {{1, 2}, {3, 2}, {5, 2}, {1, 2}},
+    private static final Tile GLADES_STONE_RU = new AnimatedBasicTile(3, new int[][] {{1, 2}, {3, 2}, {5, 2}, {1, 2}},
             Colours.get(-1, 333, 222, 444), -1, 750, true);
-    private static final Tile GLADES_STONE_LD = new AnimatedBasicTile(7, new int[][] {{0, 3}, {2, 3}, {4, 3}, {0, 3}},
+    private static final Tile GLADES_STONE_LD = new AnimatedBasicTile(4, new int[][] {{0, 3}, {2, 3}, {4, 3}, {0, 3}},
             Colours.get(-1, 333, 222, 444), -1, 750, true);
-    private static final Tile GLADES_STONE_RD = new AnimatedBasicTile(8, new int[][] {{1, 3}, {3, 3}, {5, 3}, {1, 3}},
+    private static final Tile GLADES_STONE_RD = new AnimatedBasicTile(5, new int[][] {{1, 3}, {3, 3}, {5, 3}, {1, 3}},
             Colours.get(-1, 333, 222, 444), -1, 750, true);
 
-    private static final Tile GLADES_GRASS_LU = new AnimatedBasicTile(9, new int[][] {{6, 2}, {8, 2}, {6, 2}, {10, 2}, {8, 2}},
+    private static final Tile GLADES_GRASS_LU = new AnimatedBasicTile(6, new int[][] {{6, 2}, {8, 2}, {6, 2}, {10, 2}, {8, 2}},
             Colours.get(-1, 131, 141, 512), 0xFF00FF00, 750, false);
-    private static final Tile GLADES_GRASS_RU = new AnimatedBasicTile(10, new int[][] {{7, 2}, {9, 2}, {7, 2}, {11, 2}, {9, 2}},
+    private static final Tile GLADES_GRASS_RU = new AnimatedBasicTile(7, new int[][] {{7, 2}, {9, 2}, {7, 2}, {11, 2}, {9, 2}},
             Colours.get(-1, 131, 141, 553), -1, 750, false);
-    private static final Tile GLADES_GRASS_LD = new AnimatedBasicTile(11, new int[][] {{6, 3}, {8, 3}, {6, 3}, {10, 3}, {8, 3}},
+    private static final Tile GLADES_GRASS_LD = new AnimatedBasicTile(8, new int[][] {{6, 3}, {8, 3}, {6, 3}, {10, 3}, {8, 3}},
             Colours.get(-1, 131, 141, 553), -1, 750, false);
-    private static final Tile GLADES_GRASS_RD = new AnimatedBasicTile(12, new int[][] {{7, 3}, {9, 3}, {9, 3}, {11, 3}, {9, 3}},
+    private static final Tile GLADES_GRASS_RD = new AnimatedBasicTile(9, new int[][] {{7, 3}, {9, 3}, {9, 3}, {11, 3}, {9, 3}},
             Colours.get(-1, 131, 141, 512), -1, 750, false);
 
-    private static final Tile GLADES_EXIT_LU = new AnimatedActiveTile(13, new int[][] {{12, 2}, {14, 2}, {16, 2}},
+    private static final Tile GLADES_EXIT_LU = new AnimatedActiveTile(10, new int[][] {{12, 2}, {14, 2}, {16, 2}},
             Colours.get(000, 131, 512, 554), 0xFFFFFF00, 750, false);
-    private static final Tile GLADES_EXIT_RU = new AnimatedActiveTile(14, new int[][] {{13, 2}, {15, 2}, {17, 2}},
+    private static final Tile GLADES_EXIT_RU = new AnimatedActiveTile(11, new int[][] {{13, 2}, {15, 2}, {17, 2}},
             Colours.get(000, 131, 512, 554), -1, 750, false);
-    private static final Tile GLADES_EXIT_LD = new AnimatedActiveTile(15, new int[][] {{12, 3}, {14, 3}, {16, 3}},
+    private static final Tile GLADES_EXIT_LD = new AnimatedActiveTile(12, new int[][] {{12, 3}, {14, 3}, {16, 3}},
             Colours.get(000, 131, 512, 554), -1, 750, false);
-    private static final Tile GLADES_EXIT_RD = new AnimatedActiveTile(16, new int[][] {{13, 3}, {15, 3}, {17, 3}},
+    private static final Tile GLADES_EXIT_RD = new AnimatedActiveTile(13, new int[][] {{13, 3}, {15, 3}, {17, 3}},
             Colours.get(000, 131, 512, 554), -1, 750, false);
 
     static {

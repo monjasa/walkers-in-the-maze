@@ -1,11 +1,6 @@
 package com.monja.game.maze;
 
-import com.monja.game.level.tiles.Tile;
-
 import java.util.Random;
-
-import static com.monja.game.maze.Maze.Cell.PATH;
-import static com.monja.game.maze.Maze.Cell.WALL;
 
 public class MazeBuilder {
 

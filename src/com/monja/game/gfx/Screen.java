@@ -3,7 +3,6 @@ package com.monja.game.gfx;
 public class Screen {
 
     public static final int MAP_WIDTH = 64;
-    public static final int MAP_WIDTH_MASK = MAP_WIDTH - 1;
 
     public static final byte BIT_MIRROR_X = 0x01;
     public static final byte BIT_MIRROR_Y = 0x02;

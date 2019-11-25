@@ -7,17 +7,33 @@ import com.monja.game.level.Level;
 
 public class Creator extends Actor {
 
-    private int colour = Colours.get(-1, 555, 301, 552);
+    private int colour = Colours.get(-1, 501, 541, 554);
+
+    private int[] ySpriteArray = {20, 22};
+    private int currentAnimationIndex;
+    private long lastIterationTime;
+    private int animationSwitchDelay;
 
     public Creator(Level level, int x, int y, InputHandler input) {
         super(level, "Creator", x, y, input);
         this.speed = 2;
+        this.currentAnimationIndex = 0;
+        this.animationSwitchDelay = 750;
+
+        this.xSprite = 0;
+        this.ySprite = ySpriteArray[currentAnimationIndex];
     }
 
     @Override
     public void tick() {
         int xa = 0;
         int ya = 0;
+
+        if ((System.currentTimeMillis() - lastIterationTime) >= animationSwitchDelay) {
+            lastIterationTime = System.currentTimeMillis();
+            currentAnimationIndex = (currentAnimationIndex + 1) % ySpriteArray.length;
+            ySprite = (ySpriteArray[currentAnimationIndex]);
+        }
 
         if (input.up.isPressed()) {
             ya--;
@@ -45,8 +61,8 @@ public class Creator extends Actor {
 
     @Override
     public void render(Screen screen) {
-        int xTile = 0;
-        int yTile = 26;
+        int xTile = xSprite;
+        int yTile = ySprite;
         int walkingSpeed = 4;
 
         int flipTop = (numSteps >> walkingSpeed) & 1;

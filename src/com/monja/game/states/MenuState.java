@@ -79,8 +79,14 @@ public class MenuState extends RenderedState {
                 case 1:
                     SoundPlayer.getInstance().playSound(SoundsEnumeration.MENU_SELECTION);
                     game.changeState(StateClient.getState(StatesEnumeration.CREATION_TOOL_MENU));
+                    game.setSelectedDifficulty(1);
                     break;
                 case 2:
+                    /*game.setMinimumSize(new Dimension(Game.WIDTH * 2, Game.HEIGHT * 2));
+                    game.setMaximumSize(new Dimension(Game.WIDTH * 2, Game.HEIGHT * 2));
+                    game.setPreferredSize(new Dimension(Game.WIDTH * 2, Game.HEIGHT * 2));
+                    game.frame.pack();*/
+                    SoundPlayer.getInstance().decreaseVolume();
                     break;
                 case 3:
                     break;

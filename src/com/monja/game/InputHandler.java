@@ -2,8 +2,6 @@ package com.monja.game;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import java.util.List;
 
 public class InputHandler implements KeyListener {
 
@@ -12,20 +10,14 @@ public class InputHandler implements KeyListener {
     }
 
     public class Key {
-        private int numTimesPressed = 0;
         private boolean pressed = false;
 
         public boolean isPressed() {
             return pressed;
         }
 
-        public int getNumTimesPressed() {
-            return numTimesPressed;
-        }
-
         public void toggle(boolean isPressed) {
             pressed = isPressed;
-            if (pressed) numTimesPressed++;
         }
     }
 

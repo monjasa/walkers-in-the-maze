@@ -2,10 +2,10 @@ package com.monja.game.level;
 
 public enum DifficultiesEnumeration {
 
-    EASY(21),
-    NORMAL(37),
-    HARD(59),
-    INSANE(75);
+    EASY(23),
+    NORMAL(41),
+    HARD(51),
+    INSANE(61);
 
     private int size;
 

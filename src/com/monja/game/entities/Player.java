@@ -12,13 +12,15 @@ import static com.monja.game.Game.game;
 public class Player extends Actor {
 
     private int colour = Colours.get(-1, 101, 401, 554);
-    private int tickCount = 0;
 
+    private int tickCount = 0;
     protected boolean isOnExit = false;
     protected boolean isSwimming = false;
 
     public Player(Level level, int x, int y, InputHandler input) {
         super(level, "Player", x, y, input);
+        this.xSprite = 0;
+        this.ySprite = 26;
     }
 
     @Override
@@ -67,8 +69,8 @@ public class Player extends Actor {
 
     @Override
     public void render(Screen screen) {
-        int xTile = 0;
-        int yTile = 26;
+        int xTile = xSprite;
+        int yTile = ySprite;
         int walkingSpeed = 4;
 
         int flipTop = (numSteps >> walkingSpeed) & 1;
