@@ -24,7 +24,6 @@ public class MenuState extends RenderedState {
     @Override
     void renderState() {
         Screen screen = game.getScreen();
-        int selectedOption = game.getSelectedOption();
 
         game.getLevel().renderTiles(screen, 0, 25);
 
@@ -50,11 +49,9 @@ public class MenuState extends RenderedState {
         game.tickCount++;
         game.getLevel().tick();
 
-        int selectedOption = game.getSelectedOption();
-
         if (input.up.isPressed()) {
             if (selectedOption - 1 >= 0) {
-                game.setSelectedOption(--selectedOption);
+                selectedOption--;
                 SoundPlayer.getInstance().playSound(SoundsEnumeration.MENU_NAVIGATION);
             }
 
@@ -63,7 +60,7 @@ public class MenuState extends RenderedState {
 
         if (input.down.isPressed()) {
             if (selectedOption + 1 < menuOptions.length) {
-                game.setSelectedOption(++selectedOption);
+                selectedOption++;
                 SoundPlayer.getInstance().playSound(SoundsEnumeration.MENU_NAVIGATION);
             }
 
@@ -82,11 +79,8 @@ public class MenuState extends RenderedState {
                     game.setSelectedDifficulty(1);
                     break;
                 case 2:
-                    /*game.setMinimumSize(new Dimension(Game.WIDTH * 2, Game.HEIGHT * 2));
-                    game.setMaximumSize(new Dimension(Game.WIDTH * 2, Game.HEIGHT * 2));
-                    game.setPreferredSize(new Dimension(Game.WIDTH * 2, Game.HEIGHT * 2));
-                    game.frame.pack();*/
-                    SoundPlayer.getInstance().decreaseVolume();
+                    SoundPlayer.getInstance().playSound(SoundsEnumeration.MENU_SELECTION);
+                    game.changeState(StateClient.getState(StatesEnumeration.SETTINGS));
                     break;
                 case 3:
                     break;
@@ -96,8 +90,8 @@ public class MenuState extends RenderedState {
                     break;
             }
 
+            selectedOption = 0;
             input.enter.toggle(false);
-            game.setSelectedOption(0);
         }
     }
 }

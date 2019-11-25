@@ -15,7 +15,6 @@ public class CreationToolState extends RenderedState {
 
     private MazeHistory mazeHistory;
     private int currentIteration;
-    private Actor actor;
 
     public CreationToolState(Game game) {
         super(game);
@@ -27,7 +26,7 @@ public class CreationToolState extends RenderedState {
 
         Level level = new Level(game.getLocationStrategy(), mazeHistory.getMazeWidth(), mazeHistory.getMazeHeight(),
                 mazeHistory.getCellsFromHistory(0));
-        actor = new Creator(level, 20, 20, game.getInput());
+        Actor actor = new Creator(level, 20, 20, game.getInput());
         level.addEntity(actor);
         game.setupLevelAndActor(level, actor);
     }
@@ -35,8 +34,8 @@ public class CreationToolState extends RenderedState {
     public void prepareLevelAndPlayer(int index) {
         Level level = new Level(game.getLocationStrategy(), mazeHistory.getMazeWidth(), mazeHistory.getMazeHeight(),
                 mazeHistory.getCellsFromHistory(index));
-        level.addEntity(actor);
-        game.setupLevelAndActor(level, actor);
+        level.addEntity(game.getActor());
+        game.setupLevelAndActor(level, game.getActor());
     }
 
     @Override

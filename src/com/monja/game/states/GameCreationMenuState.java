@@ -2,6 +2,7 @@ package com.monja.game.states;
 
 import com.monja.game.Game;
 import com.monja.game.InputHandler;
+import com.monja.game.PropertiesClient;
 import com.monja.game.gfx.Colours;
 import com.monja.game.gfx.Font;
 import com.monja.game.gfx.Screen;
@@ -10,46 +11,23 @@ import com.monja.game.level.locations.LocationsEnumeration;
 import com.monja.game.sound.SoundPlayer;
 import com.monja.game.sound.SoundsEnumeration;
 
-import java.util.HashMap;
-
 public class GameCreationMenuState extends RenderedState {
 
-    private static String easy = "Easy";
-    private static String normal = "Normal";
-    private static String hard = "Hard";
-    private static String insane = "Insane";
-    private static String difficulties[] = {easy, normal, hard, insane};
+    private static String locations[] = {
+        LocationsEnumeration.GLADES.toString(),
+        LocationsEnumeration.DARK_FOREST.toString()
+    };
 
-    private static HashMap<String, DifficultiesEnumeration> difficultiesMap;
-
-    private static String glades = "Glades";
-    private static String darkForest = "The Dark Forest";
-    private static String locations[] = {glades, darkForest};
-
-    private static HashMap<String, LocationsEnumeration> locationsMap;
+    private static String difficulties[] = {
+        DifficultiesEnumeration.EASY.toString(),
+        DifficultiesEnumeration.NORMAL.toString(),
+        DifficultiesEnumeration.HARD.toString(),
+        DifficultiesEnumeration.INSANE.toString()
+    };
 
     private static String start = "Start";
-    private static String gameCreationMenuOptions[] = {null, null, start};
-
-    static {
-        difficultiesMap = new HashMap<>();
-        difficultiesMap.put(easy, DifficultiesEnumeration.EASY);
-        difficultiesMap.put(normal, DifficultiesEnumeration.NORMAL);
-        difficultiesMap.put(hard, DifficultiesEnumeration.HARD);
-        difficultiesMap.put(insane, DifficultiesEnumeration.INSANE);
-
-        locationsMap = new HashMap<>();
-        locationsMap.put(glades, LocationsEnumeration.GLADES);
-        locationsMap.put(darkForest, LocationsEnumeration.DARK_FOREST);
-    }
-
-    public static DifficultiesEnumeration getDifficulty(int selectedDifficulty) {
-        return difficultiesMap.get(difficulties[selectedDifficulty]);
-    }
-
-    public static LocationsEnumeration getLocation(int selectedLocation) {
-        return locationsMap.get(locations[selectedLocation]);
-    }
+    private static String backToMenu = "Back to menu";
+    private static String gameCreationMenuOptions[] = {null, null, start, backToMenu};
 
     public GameCreationMenuState(Game game) {
         super(game);
@@ -58,7 +36,6 @@ public class GameCreationMenuState extends RenderedState {
     @Override
     void renderState() {
         Screen screen = game.getScreen();
-        int selectedOption = game.getSelectedOption();
         int selectedDifficulty = game.getSelectedDifficulty();
         int selectedLocation = game.getSelectedLocation();
 
@@ -68,7 +45,7 @@ public class GameCreationMenuState extends RenderedState {
         gameCreationMenuOptions[1] = locations[selectedLocation];
 
         int heightUnit = screen.height / 15;
-        int heightBlocks[] = {4, 6, 9, 11, 14};
+        int heightBlocks[] = {4, 6, 9, 11, 12, 13, 14};
 
         String selectDifficulty = "Select Difficulty:";
         Font.render(selectDifficulty, screen, screen.xOffset + screen.width / 2 - (selectDifficulty.length() * 8) / 2,
@@ -81,6 +58,7 @@ public class GameCreationMenuState extends RenderedState {
         for (int i = 0; i < gameCreationMenuOptions.length; i++) {
             if (i != selectedOption) {
                 int block =  i == gameCreationMenuOptions.length - 1 ? 2 * i : 2 * i + 1;
+                System.out.println(i);
                 Font.render(gameCreationMenuOptions[i], screen, screen.xOffset + screen.width / 2 - ((gameCreationMenuOptions[i].length() * 8) / 2),
                         heightBlocks[block] * heightUnit, Colours.get(-1, 000, -1, 555), 1);
             }
@@ -102,14 +80,12 @@ public class GameCreationMenuState extends RenderedState {
         InputHandler input = game.getInput();
         game.tickCount++;
         game.getLevel().tick();
-
-        int selectedOption = game.getSelectedOption();
         int selectedDifficulty = game.getSelectedDifficulty();
         int selectedLocation = game.getSelectedLocation();
 
         if (input.up.isPressed()) {
             if (selectedOption - 1 >= 0) {
-                game.setSelectedOption(--selectedOption);
+                selectedOption--;
                 SoundPlayer.getInstance().playSound(SoundsEnumeration.MENU_NAVIGATION);
             }
 
@@ -118,7 +94,7 @@ public class GameCreationMenuState extends RenderedState {
 
         if (input.down.isPressed()) {
             if (selectedOption + 1 < gameCreationMenuOptions.length) {
-                game.setSelectedOption(++selectedOption);
+                selectedOption++;
                 SoundPlayer.getInstance().playSound(SoundsEnumeration.MENU_NAVIGATION);
             }
 
@@ -141,7 +117,7 @@ public class GameCreationMenuState extends RenderedState {
                     else
                         game.setSelectedLocation(locations.length - 1);
 
-                    game.changeLocationStrategy(getLocation(game.getSelectedLocation()).getLocationStrategy());
+                    game.changeLocationStrategy(PropertiesClient.getLocation(game.getSelectedLocation()).getLocationStrategy());
                     SoundPlayer.getInstance().playSound(SoundsEnumeration.MENU_NAVIGATION);
                     break;
             }
@@ -165,7 +141,7 @@ public class GameCreationMenuState extends RenderedState {
                     else
                         game.setSelectedLocation(0);
 
-                    game.changeLocationStrategy(getLocation(game.getSelectedLocation()).getLocationStrategy());
+                    game.changeLocationStrategy(PropertiesClient.getLocation(game.getSelectedLocation()).getLocationStrategy());
                     SoundPlayer.getInstance().playSound(SoundsEnumeration.MENU_NAVIGATION);
                     break;
             }
@@ -189,16 +165,20 @@ public class GameCreationMenuState extends RenderedState {
                     else
                         game.setSelectedLocation(0);
 
-                    game.changeLocationStrategy(getLocation(game.getSelectedLocation()).getLocationStrategy());
+                    game.changeLocationStrategy(PropertiesClient.getLocation(game.getSelectedLocation()).getLocationStrategy());
                     break;
                 case 2:
-                    game.setSelectedOption(0);
                     SoundPlayer.getInstance().playSound(SoundsEnumeration.MENU_SELECTION);
                     game.changeState(StateClient.getState(StatesEnumeration.GAME));
                     game.initializeLevel();
                     break;
+                case 3:
+                    SoundPlayer.getInstance().playSound(SoundsEnumeration.PAUSE_DEACTIVATION);
+                    game.changeState(StateClient.getState(StatesEnumeration.MENU));
+                    break;
             }
 
+            selectedOption = 0;
             input.enter.toggle(false);
         }
     }

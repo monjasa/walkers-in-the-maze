@@ -17,6 +17,7 @@ public class StateClient {
         states.put(StatesEnumeration.CREATION_TOOL, new CreationToolState(game));
         states.put(StatesEnumeration.PAUSE, new PauseState(game));
         states.put(StatesEnumeration.CREATION_PAUSE, new CreationPauseState(game));
+        states.put(StatesEnumeration.SETTINGS, new SettingsState(game));
         states.put(StatesEnumeration.FINISH, new FinishState(game));
     }
 

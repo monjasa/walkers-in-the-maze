@@ -27,7 +27,8 @@ public class CreationToolMenuState extends RenderedState {
     private static HashMap<String, LocationsEnumeration> locationsMap;
 
     private static String start = "Start";
-    private static String gameCreationMenuOptions[] = {null, null, start};
+    private static String backToMenu = "Back to menu";
+    private static String gameCreationMenuOptions[] = {null, null, start, backToMenu};
 
     static {
         difficultiesMap = new HashMap<>();
@@ -54,7 +55,6 @@ public class CreationToolMenuState extends RenderedState {
     @Override
     void renderState() {
         Screen screen = game.getScreen();
-        int selectedOption = game.getSelectedOption();
         int selectedDifficulty = game.getSelectedDifficulty();
         int selectedLocation = game.getSelectedLocation();
 
@@ -64,7 +64,7 @@ public class CreationToolMenuState extends RenderedState {
         gameCreationMenuOptions[1] = locations[selectedLocation];
 
         int heightUnit = screen.height / 15;
-        int heightBlocks[] = {4, 6, 9, 11, 14};
+        int heightBlocks[] = {4, 6, 9, 11, 12, 13, 14};
 
         String selectDifficulty = "Select Difficulty:";
         Font.render(selectDifficulty, screen, screen.xOffset + screen.width / 2 - (selectDifficulty.length() * 8) / 2,
@@ -99,13 +99,12 @@ public class CreationToolMenuState extends RenderedState {
         game.tickCount++;
         game.getLevel().tick();
 
-        int selectedOption = game.getSelectedOption();
         int selectedDifficulty = game.getSelectedDifficulty();
         int selectedLocation = game.getSelectedLocation();
 
         if (input.up.isPressed()) {
             if (selectedOption - 1 >= 0) {
-                game.setSelectedOption(--selectedOption);
+                selectedOption--;
                 SoundPlayer.getInstance().playSound(SoundsEnumeration.MENU_NAVIGATION);
             }
 
@@ -114,7 +113,7 @@ public class CreationToolMenuState extends RenderedState {
 
         if (input.down.isPressed()) {
             if (selectedOption + 1 < gameCreationMenuOptions.length) {
-                game.setSelectedOption(++selectedOption);
+                selectedOption++;
                 SoundPlayer.getInstance().playSound(SoundsEnumeration.MENU_NAVIGATION);
             }
 
@@ -188,15 +187,18 @@ public class CreationToolMenuState extends RenderedState {
                     game.changeLocationStrategy(getLocation(game.getSelectedLocation()).getLocationStrategy());
                     break;
                 case 2:
-                    game.setSelectedOption(0);
                     SoundPlayer.getInstance().playSound(SoundsEnumeration.MENU_SELECTION);
                     game.changeState(StateClient.getState(StatesEnumeration.CREATION_TOOL));
                     game.setupCreationTool();
                     break;
+                case 3:
+                    SoundPlayer.getInstance().playSound(SoundsEnumeration.PAUSE_DEACTIVATION);
+                    game.changeState(StateClient.getState(StatesEnumeration.MENU));
+                    break;
             }
 
+            selectedOption = 0;
             input.enter.toggle(false);
-            game.setSelectedOption(0);
         }
     }
 

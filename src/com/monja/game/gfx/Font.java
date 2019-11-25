@@ -3,11 +3,14 @@ package com.monja.game.gfx;
 public class Font {
 
     private static String chars = "" +
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZ      " +
-            "0123456789!%$&'(.+/,-*)=?@:;<>  ";
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ_     " +
+            "0123456789!%$&'(.+/,-*)=?@:;<>| ";
     private static String fullChars = "" +
             "MNQTWXY" +
             "%&@";
+
+    private static final int xBorderOffset = 20;
+    private static final int yBorderOffset = 20;
 
     public static void render(String msg, Screen screen, int x, int y, int colour, int scale) {
         msg = msg.toUpperCase();
@@ -21,5 +24,13 @@ public class Font {
                 if (fullChars.indexOf(msg.charAt(i)) >= 0) offset++;
             }
         }
+    }
+
+    public static int getxBorderOffset() {
+        return xBorderOffset;
+    }
+
+    public static int getyBorderOffset() {
+        return xBorderOffset;
     }
 }

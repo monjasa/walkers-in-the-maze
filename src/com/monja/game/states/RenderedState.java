@@ -5,6 +5,7 @@ import com.monja.game.Game;
 public abstract class RenderedState implements State {
 
     protected Game game;
+    protected int selectedOption;
 
     public RenderedState(Game game) {
         this.game = game;

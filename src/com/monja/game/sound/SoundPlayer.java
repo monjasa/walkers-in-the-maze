@@ -34,15 +34,14 @@ public class SoundPlayer {
     private void init() {
         loadSound(SoundsEnumeration.GLADES_BACKGROUND, "/sounds/glades_soundtrack.wav");
         loadSound(SoundsEnumeration.FOREST_BACKGROUND, "/sounds/forest_soundtrack.wav");
-
         loadSound(SoundsEnumeration.MENU_NAVIGATION, "/sounds/menu_navigate.wav");
-        loadSound(SoundsEnumeration.FINISH, "/sounds/end_sound.wav");
         loadSound(SoundsEnumeration.MENU_SELECTION, "/sounds/menu_select.wav");
         loadSound(SoundsEnumeration.PAUSE_ACTIVATION, "/sounds/pause_activate.wav");
         loadSound(SoundsEnumeration.PAUSE_DEACTIVATION, "/sounds/pause_deactivate.wav");
         loadSound(SoundsEnumeration.MAZE_BUILDING, "/sounds/maze_building.wav");
         loadSound(SoundsEnumeration.MAZE_DESTROYING, "/sounds/maze_destroying.wav");
         loadSound(SoundsEnumeration.MAZE_REBUILDING, "/sounds/maze_rebuilding.wav");
+        loadSound(SoundsEnumeration.FINISH, "/sounds/end_sound.wav");
     }
 
     private void loadSound(SoundsEnumeration name, String resourcePath) {
@@ -65,7 +64,7 @@ public class SoundPlayer {
     public void increaseVolume() {
         for (Map.Entry<SoundsEnumeration, Clip> entry : clips.entrySet()) {
             FloatControl gainControl = (FloatControl) entry.getValue().getControl(FloatControl.Type.MASTER_GAIN);
-            volume = volume + 1.0f > gainControl.getMaximum() ? gainControl.getMaximum() : volume + 2.0f;
+            volume = volume + 0.75f > gainControl.getMaximum() ? gainControl.getMaximum() : volume + 0.75f;
             gainControl.setValue(volume);
         }
     }
@@ -73,7 +72,7 @@ public class SoundPlayer {
     public void decreaseVolume() {
         for (Map.Entry<SoundsEnumeration, Clip> entry : clips.entrySet()) {
             FloatControl gainControl = (FloatControl) entry.getValue().getControl(FloatControl.Type.MASTER_GAIN);
-            volume = volume - 0.5f < gainControl.getMinimum() ? gainControl.getMinimum() : volume - 0.5f;
+            volume = volume - 0.75f < gainControl.getMinimum() ? gainControl.getMinimum() : volume - 0.75f;
             gainControl.setValue(volume);
         }
     }

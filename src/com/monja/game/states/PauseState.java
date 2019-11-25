@@ -37,8 +37,6 @@ public class PauseState extends RenderedState {
         Font.render(paused, screen, screen.xOffset + screen.width / 2 - (paused.length() * 8) / 2,
                 screen.yOffset + 60, Colours.get(-1, 000, -1, 555), 1);
 
-        int selectedOption = game.getSelectedOption();
-
         for (int i = 0; i < pauseMenuOptions.length; i++) {
             if (i != selectedOption) {
                 Font.render(pauseMenuOptions[i], screen, screen.xOffset + screen.width / 2 - ((pauseMenuOptions[i].length() * 8) / 2),
@@ -61,11 +59,9 @@ public class PauseState extends RenderedState {
         SoundPlayer soundPlayer = SoundPlayer.getInstance();
         game.tickCount++;
 
-        int selectedOption = game.getSelectedOption();
-
         if (input.up.isPressed()) {
             if (selectedOption - 1 >= 0) {
-                game.setSelectedOption(--selectedOption);
+                selectedOption--;
                 soundPlayer.playSound(SoundsEnumeration.MENU_NAVIGATION);
             }
             input.up.toggle(false);
@@ -73,7 +69,7 @@ public class PauseState extends RenderedState {
 
         if (input.down.isPressed()) {
             if (selectedOption + 1 < pauseMenuOptions.length) {
-                game.setSelectedOption(++selectedOption);
+                selectedOption++;
                 soundPlayer.playSound(SoundsEnumeration.MENU_NAVIGATION);
             }
             input.down.toggle(false);
@@ -101,8 +97,8 @@ public class PauseState extends RenderedState {
                     break;
             }
 
+            selectedOption = 0;
             input.enter.toggle(false);
-            game.setSelectedOption(0);
         }
     }
 }

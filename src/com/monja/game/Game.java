@@ -44,7 +44,6 @@ public class Game extends Canvas implements Runnable {
     public long pauseEndTime = 0;
 
     private State state;
-    private int selectedOption;
     private int selectedDifficulty;
     private int selectedLocation;
 
@@ -126,7 +125,7 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void setupLevelAndActor() {
-        int mazeSize = GameCreationMenuState.getDifficulty(selectedDifficulty).getSize();
+        int mazeSize = PropertiesClient.getDifficulty(selectedDifficulty).getSize();
         level = new Level(locationStrategy, mazeSize * 2 + 1, mazeSize);
         actor = new Player(level, 20, 20, input);
         level.addEntity(actor);
@@ -157,11 +156,10 @@ public class Game extends Canvas implements Runnable {
         setupColours();
         input = new InputHandler(this);
 
-        selectedOption = 0;
         selectedDifficulty = 1;
         selectedLocation = 0;
 
-        locationStrategy = GameCreationMenuState.getLocation(selectedLocation).getLocationStrategy();
+        locationStrategy = PropertiesClient.getLocation(selectedLocation).getLocationStrategy();
         locationStrategy.playBackground();
 
         StateClient.initializeStates(this);
@@ -275,14 +273,6 @@ public class Game extends Canvas implements Runnable {
 
     public void setSelectedLocation(int selectedLocation) {
         this.selectedLocation = selectedLocation;
-    }
-
-    public int getSelectedOption() {
-        return selectedOption;
-    }
-
-    public void setSelectedOption(int selectedOption) {
-        this.selectedOption = selectedOption;
     }
 
     public int getSelectedDifficulty() {

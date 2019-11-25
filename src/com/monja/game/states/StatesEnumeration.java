@@ -8,5 +8,6 @@ public enum StatesEnumeration {
     CREATION_TOOL,
     PAUSE,
     CREATION_PAUSE,
+    SETTINGS,
     FINISH
 }
