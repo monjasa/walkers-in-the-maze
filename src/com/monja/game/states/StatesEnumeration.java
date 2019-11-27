@@ -9,5 +9,6 @@ public enum StatesEnumeration {
     PAUSE,
     CREATION_PAUSE,
     SETTINGS,
+    CREDITS,
     FINISH
 }

@@ -230,7 +230,7 @@ public class DarkForestLocation implements LocationStrategy {
 
     @Override
     public void playBackground() {
-        SoundPlayer.getInstance().playSound(SoundsEnumeration.FOREST_BACKGROUND);
+        SoundPlayer.getInstance().playSoundContinuously(SoundsEnumeration.FOREST_BACKGROUND);
     }
 
     @Override

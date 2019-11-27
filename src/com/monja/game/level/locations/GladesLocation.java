@@ -205,7 +205,7 @@ public class GladesLocation implements LocationStrategy {
 
     @Override
     public void playBackground() {
-        SoundPlayer.getInstance().playSound(SoundsEnumeration.GLADES_BACKGROUND);
+        SoundPlayer.getInstance().playSoundContinuously(SoundsEnumeration.GLADES_BACKGROUND);
     }
 
     @Override

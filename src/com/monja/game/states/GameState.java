@@ -8,9 +8,6 @@ import com.monja.game.gfx.Colours;
 import com.monja.game.gfx.Font;
 import com.monja.game.gfx.Screen;
 import com.monja.game.level.Level;
-import com.monja.game.level.locations.DarkForestLocation;
-import com.monja.game.level.locations.GladesLocation;
-import com.monja.game.level.locations.LocationsEnumeration;
 import com.monja.game.sound.SoundPlayer;
 import com.monja.game.sound.SoundsEnumeration;
 
@@ -37,8 +34,21 @@ public class GameState extends RenderedState {
         levelInformation.append(" - ");
         levelInformation.append(PropertiesClient.getDifficulty(game.getSelectedDifficulty()).toString());
 
+        StringBuilder timeSpent = new StringBuilder();
+        int timeSpentInSeconds = (int) (System.currentTimeMillis() - game.startTime) / 1000;
+        int timeSpentInMinutes = timeSpentInSeconds / 60;
+        timeSpentInSeconds = timeSpentInSeconds % 60;
+
+        if (timeSpentInMinutes < 10) timeSpent.append('0');
+        timeSpent.append(timeSpentInMinutes);
+        timeSpent.append(':');
+        if (timeSpentInSeconds < 10) timeSpent.append('0');
+        timeSpent.append(timeSpentInSeconds);
+
         Font.render(levelInformation.toString(), screen, screen.width + screen.xOffset - (levelInformation.length() * 8) - Font.getxBorderOffset(),
                 screen.height + screen.yOffset - Font.getyBorderOffset(), Colours.get(-1, 000, -1, 555), 1);
+        Font.render(timeSpent.toString(), screen, screen.width + screen.xOffset - (timeSpent.length() * 8) - Font.getxBorderOffset(),
+                screen.yOffset + Font.getyBorderOffset(), Colours.get(-1, 000, -1, 555), 1);
     }
 
     @Override

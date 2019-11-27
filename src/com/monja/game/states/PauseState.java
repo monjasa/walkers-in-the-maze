@@ -23,9 +23,10 @@ public class PauseState extends RenderedState {
 
     @Override
     void renderState() {
-        Actor actor = game.getActor();
+
         Screen screen = game.getScreen();
         Level level = game.getLevel();
+        Actor actor = game.getActor();
 
         int xOffset = actor.x - (screen.width / 2);
         int yOffset = actor.y - (screen.height / 2);

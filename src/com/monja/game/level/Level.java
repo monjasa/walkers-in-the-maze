@@ -1,15 +1,10 @@
 package com.monja.game.level;
 
 import com.monja.game.entities.Entity;
-import com.monja.game.gfx.Colours;
 import com.monja.game.gfx.Screen;
-import com.monja.game.level.locations.DarkForestLocation;
-import com.monja.game.level.locations.GladesLocation;
 import com.monja.game.level.locations.LocationStrategy;
-import com.monja.game.level.tiles.BasicTile;
 import com.monja.game.level.tiles.Tile;
 import com.monja.game.maze.Maze;
-import com.monja.game.maze.MazeBuilder;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -23,7 +18,7 @@ public class Level {
     private byte[] tiles;
     private int width;
     private int height;
-    private List<Entity> entities = new ArrayList<>();
+    private List<Entity> entities = new ArrayList<Entity>();
     //private String imagePath;
     private BufferedImage image;
 
@@ -46,11 +41,6 @@ public class Level {
             e.printStackTrace();
         }
     }*/
-
-    public void alterTile(int x, int y, Tile newTile) {
-        this.tiles[x + y * width] = newTile.getId();
-        image.setRGB(x, y, newTile.getLevelColour());
-    }
 
     public void tick() {
         for (Entity e : entities) {

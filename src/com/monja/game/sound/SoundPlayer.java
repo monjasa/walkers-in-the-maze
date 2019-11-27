@@ -15,8 +15,8 @@ public class SoundPlayer {
     private static SoundPlayer instance;
     private static float volume;
 
-    private HashMap<SoundsEnumeration, Clip> clips = new HashMap<>();
-    private HashMap<SoundsEnumeration, Integer> pausedClips = new HashMap<>();
+    private HashMap<SoundsEnumeration, Clip> clips = new HashMap<SoundsEnumeration, Clip>();
+    private HashMap<SoundsEnumeration, Integer> pausedClips = new HashMap<SoundsEnumeration, Integer>();
 
     private SoundPlayer() {
         init();
@@ -80,8 +80,18 @@ public class SoundPlayer {
     public boolean playSound(SoundsEnumeration name) {
         if (clips.containsKey(name)) {
             clips.get(name).setFramePosition(0);
-
             clips.get(name).start();
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean playSoundContinuously(SoundsEnumeration name) {
+        if (clips.containsKey(name)) {
+            clips.get(name).setFramePosition(0);
+            clips.get(name).start();
+            clips.get(name).loop(Clip.LOOP_CONTINUOUSLY);
             return true;
         }
 
